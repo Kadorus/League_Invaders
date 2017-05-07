@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 
 public class GameObject {
-	Rocketship rocketship = new Rocketship(250,700,50,50);
+	boolean isAlive;
 	
 	int x;
 	int y;

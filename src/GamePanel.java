@@ -12,6 +12,8 @@ import javax.swing.Timer;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	
+	Rocketship rocketship = new Rocketship(250,700,50,50);
+	ObjectManager manager = new ObjectManager();
 	
 	final int MENU_STATE = 0;
 	final int GAME_STATE = 1;
@@ -24,8 +26,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	
 	Timer timer1;
 	
-
 	GamePanel(){
+		manager.addObject(rocketship); 
 		timer1 = new Timer(1000/60,this);
 		titleFont = new Font("Arial", Font.PLAIN, 48);
 		font2 = new Font("Arial", Font.PLAIN, 24);
@@ -37,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	}
 	
 	public void updateGameState(){
-		
+		manager.update();
 	}
 
 	public void updateEndState(){
@@ -56,6 +58,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 	public void drawGameState(Graphics g){
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, LeagueInvaders.frame1Width, LeagueInvaders.frame1Height);
+		manager.draw(g);
 	}
 
 	public void drawEndState(Graphics g){
@@ -115,7 +118,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener{
 				currentState = END_STATE;
 			}
 		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			manager.addObject(new Projectile(rocketship.x, rocketship.y, 10, 10));
+		}
 	}
+	
+	
 
 	@Override
 	public void keyReleased(KeyEvent e) {
